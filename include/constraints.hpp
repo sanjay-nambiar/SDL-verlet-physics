@@ -1,10 +1,3 @@
-//
-//  constraints.h
-//  
-//
-//  Created by Nambiar, Sanjay M on 1/28/16.
-//
-//
 
 #ifndef ____constraints__
 #define ____constraints__

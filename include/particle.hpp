@@ -1,10 +1,3 @@
-//
-//  particle.hpp
-//  
-//
-//  Created by Nambiar, Sanjay M on 1/28/16.
-//
-//
 
 #ifndef ____particle__
 #define ____particle__

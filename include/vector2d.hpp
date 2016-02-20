@@ -1,10 +1,3 @@
-//
-//  vector2d.hpp
-//  
-//
-//  Created by Nambiar, Sanjay M on 1/27/16.
-//
-//
 
 #ifndef ____vector2d__
 #define ____vector2d__

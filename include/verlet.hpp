@@ -1,10 +1,3 @@
-//
-//  verlet.h
-//  
-//
-//  Created by Nambiar, Sanjay M on 2/7/16.
-//
-//
 
 #ifndef ____verlet__
 #define ____verlet__
@@ -21,9 +14,9 @@ namespace physics
     {
         T _width;
         T _height;
-        math::Vector2d<T> _gravity;
         T _friction;
         T _ground_friction;
+        math::Vector2d<T> _gravity;
         std::vector<Composite<T>*> _composites;
 
         void RestrictToBounds(Particle<T>* particle)
@@ -51,14 +44,14 @@ namespace physics
     public:
         const T& width;
         const T& height;
-        const math::Vector2d<T>& gravity;
         const T& friction;
         const T& ground_friction;
+        const math::Vector2d<T>& gravity;
         const std::vector<Composite<T>*>& composites;
         
         Verlet(T width, T height)
-        : width(_width), height(_height), friction(_friction), gravity(_gravity),
-        ground_friction(_ground_friction), composites(_composites)
+        : width(_width), height(_height), friction(_friction), ground_friction(_ground_friction),
+        gravity(_gravity), composites(_composites)
         {
             _gravity.Set(0, 0.2);
             _friction = 1;

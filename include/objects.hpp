@@ -1,10 +1,3 @@
-//
-//  basic_objects.h
-//  
-//
-//  Created by Nambiar, Sanjay M on 2/7/16.
-//
-//
 
 #ifndef ____basic_objects__
 #define ____basic_objects__
@@ -22,10 +15,10 @@ namespace physics {
     template<class T> Composite<T>* Point(math::Vector2d<T>& position)
     {
         std::vector<Particle<T>*> particles(1, new Particle<T>(position));
-        return new Composite<T>(particles, std::vector<Constraint<T>>());
+        return new Composite<T>(particles, std::vector<Constraint<T>*>());
     }
 
-    template<class T> Composite<T>* LineSegments(std::vector<math::Vector2d<T>>& vertices, T stiffness)
+    template<class T> Composite<T>* LineSegments(std::vector<math::Vector2d<T> >& vertices, T stiffness)
     {
         int vertex_count = (int) vertices.size();
         Composite<T>* composite = new Composite<T>(vertex_count, vertex_count - 1);
@@ -78,7 +71,6 @@ namespace physics {
         return composite;
     }
 }
-
 
 
 #endif /* defined(____basic_objects__) */

@@ -1,10 +1,3 @@
-//
-//  composite.hpp
-//
-//
-//  Created by Nambiar, Sanjay M on 1/29/16.
-//
-//
 
 #ifndef ____composite__
 #define ____composite__
