@@ -19,8 +19,10 @@ LN_OPTS =
 CC = g++
 
 ## SDL options
-CC_SDL = -I/usr/local/include/SDL2 -I include -D_REENTRANT
-LN_SDL = -L/usr/local/lib -Wl,-rpath,/usr/local/lib -lSDL2 -lSDL2_gfx -lSDL2_image -lSDL2_mixer -lSDL2_net -lSDL2_ttf -lpthread
+SDL_LD_PATH = /usr/local/lib
+SDL_INC_PATH = /usr/local/include/SDL2
+CC_SDL = -I$(SDL_INC_PATH) -I include -D_REENTRANT
+LN_SDL = -L$(SDL_LD_PATH) -Wl,-rpath,$(SDL_LD_PATH) -lSDL2 -lSDL2_gfx -lSDL2_image -lSDL2_mixer -lSDL2_net -lSDL2_ttf -lpthread
 
 
 
