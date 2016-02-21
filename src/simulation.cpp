@@ -19,6 +19,8 @@
 #define VERLET_LINE_COLOR 0xFFFFFFFF
 #define WORLD_WIDTH 800
 #define WORLD_HEIGHT 600
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
 
 
 using namespace physics;
@@ -33,7 +35,8 @@ int Simulation::InitializeSDL()
         return 1;
     }
     
-    window = SDL_CreateWindow("Verlet Sim", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Verlet Sim", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+        WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     if (window == nullptr)
     {
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -49,6 +52,15 @@ int Simulation::InitializeSDL()
         SDL_Quit();
         return 1;
     }
+
+    if (SDL_GetRendererOutputSize(renderer, &renderer_width, &renderer_height) != 0)
+    {
+        std::cout << "SDL_GetRendererOutputSize Error: " << SDL_GetError() << std::endl;
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+    }
+
     return 0;
 }
 
@@ -61,6 +73,9 @@ void Simulation::DestroySDL()
 
 void Simulation::CreateWorld(int width, int height)
 {
+    world_width = width;
+    world_height = height;
+    world_aspect_ratio = width / height;
     world = new Verlet<float>(width, height);
 
     // Line segments
@@ -79,7 +94,7 @@ void Simulation::CreateWorld(int width, int height)
         math::Vector2d<float>(440,0), math::Vector2d<float>(460,0),
         math::Vector2d<float>(480,0), math::Vector2d<float>(500,0)
     };
-    math::Vector2d<float> position_offset(70, 30);
+    math::Vector2d<float> position_offset(140, 30);
     float stiffness = 0.2;
     
     Composite<float>* segment = LineSegments<float>(segment_points, position_offset, stiffness);
@@ -88,6 +103,10 @@ void Simulation::CreateWorld(int width, int height)
     world->AddComposite(segment);
 }
 
+inline math::Vector2d<float> Simulation::ScaleFromWorldToRenderer(math::Vector2d<float> position) const
+{
+    return math::Vector2d<float>(position.x, position.y);
+}
 
 
 // Public methods
@@ -147,7 +166,8 @@ void Simulation::Draw()
             {
                 PinConstraint<float>* pin_constraint = dynamic_cast<PinConstraint<float>*>(*constraintIt);
                 math::Vector2d<float>* position = &pin_constraint->particle->position;
-                filledCircleColor(renderer, position->x, position->y, 5, VERLET_PIN_COLOR);
+                math::Vector2d<float> scaledPosition = ScaleFromWorldToRenderer(*position);
+                filledCircleColor(renderer, scaledPosition.x, scaledPosition.y, 5, VERLET_PIN_COLOR);
             }
             //DistanceConstraint
             else if (dynamic_cast<DistanceConstraint<float>*>(*constraintIt) != nullptr)
@@ -155,9 +175,13 @@ void Simulation::Draw()
                 DistanceConstraint<float>* distance_constraint = dynamic_cast<DistanceConstraint<float>*>(*constraintIt);
                 math::Vector2d<float>* position1 = &distance_constraint->p1->position;
                 math::Vector2d<float>* position2 = &distance_constraint->p2->position;
-                lineColor(renderer, position1->x, position1->y, position2->x, position2->y, VERLET_LINE_COLOR);
-                filledCircleColor(renderer, position1->x, position1->y, 3, VERLET_PARTICLE_COLOR);
-                filledCircleColor(renderer, position2->x, position2->y, 3, VERLET_PARTICLE_COLOR);
+                math::Vector2d<float> scaledPosition1 = ScaleFromWorldToRenderer(*position1);
+                math::Vector2d<float> scaledPosition2 = ScaleFromWorldToRenderer(*position2);
+
+                lineColor(renderer, scaledPosition1.x, scaledPosition1.y, 
+                    scaledPosition2.x, scaledPosition2.y, VERLET_LINE_COLOR);
+                filledCircleColor(renderer, scaledPosition1.x, scaledPosition1.y, 3, VERLET_PARTICLE_COLOR);
+                filledCircleColor(renderer, scaledPosition2.x, scaledPosition2.y, 3, VERLET_PARTICLE_COLOR);
             }
         }
     }
