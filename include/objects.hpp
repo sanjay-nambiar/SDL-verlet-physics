@@ -18,18 +18,26 @@ namespace physics {
         return new Composite<T>(particles, std::vector<Constraint<T>*>());
     }
 
-    template<class T> Composite<T>* LineSegments(std::vector<math::Vector2d<T> >& vertices, T stiffness)
+    template<class T> Composite<T>* LineSegments(std::vector<math::Vector2d<T> >& vertices, 
+        math::Vector2d<T>& position_offset, T stiffness)
     {
         int vertex_count = (int) vertices.size();
         Composite<T>* composite = new Composite<T>(vertex_count, vertex_count - 1);
 
+        Particle<T>* prev_particle;
+        Particle<T>* particle;
+
         auto it = vertices.begin();
-        (*composite).AddParticle(new Particle<T>(*it));
-        for (int i = 1; it != vertices.end(); ++it, ++i)
+        math::Vector2d<T> actual_position = (*it) + position_offset;
+        prev_particle = new Particle<T>(actual_position);
+        composite->AddParticle(prev_particle);
+        for (++it; it != vertices.end(); ++it)
         {
-            (*composite).AddParticle(new Particle<T>(*it));
-            (*composite).AddConstraint(new DistanceConstraint<T> ( *(*composite).particles[i],
-                                                                  *(*composite).particles[i-1], stiffness));
+            actual_position = (*it) + position_offset;
+            particle = new Particle<T>(actual_position);
+            composite->AddParticle(particle);
+            composite->AddConstraint(new DistanceConstraint<T> (prev_particle, particle, stiffness));
+            prev_particle = particle;
         }
         return composite;
     }
@@ -46,26 +54,26 @@ namespace physics {
             T theta = i * stride;
             math::Vector2d<T> particle_position((origin.x + cos(theta)*radius), (origin.y + sin(theta)*radius));
             Particle<T>* particle = new Particle<T>(particle_position);
-            (*composite).AddParticle(particle);
+            composite->AddParticle(particle);
         }
 
         Particle<T>* center = new Particle<T>(origin);
-        (*composite).AddParticle(center);
+        composite->AddParticle(center);
 
         // constraints
         for (int i = 0; i < segments; ++i)
         {
             Constraint<T>* distance_constraint1 =
-                new DistanceConstraint<T> (*(*composite).particles[i], *(*composite).particles[(i+1)%segments], tread_stiffness);
-            (*composite).AddConstraint(distance_constraint1);
+                new DistanceConstraint<T> (composite->particles[i], composite->particles[(i+1)%segments], tread_stiffness);
+            composite->AddConstraint(distance_constraint1);
 
             Constraint<T>* distance_constraint2 =
-                new DistanceConstraint<T> (*(*composite).particles[i], *center, spoke_stiffness);
-            (*composite).AddConstraint(distance_constraint2);
+                new DistanceConstraint<T> (composite->particles[i], center, spoke_stiffness);
+            composite->AddConstraint(distance_constraint2);
 
             Constraint<T>* distance_constraint3 =
-                new DistanceConstraint<T> (*(*composite).particles[i], *(*composite).particles[(i+5)%segments], tread_stiffness);
-            (*composite).AddConstraint(distance_constraint3);
+                new DistanceConstraint<T> (composite->particles[i], composite->particles[(i+5)%segments], tread_stiffness);
+            composite->AddConstraint(distance_constraint3);
         }
 
         return composite;

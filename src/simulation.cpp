@@ -14,7 +14,7 @@
 #include "verlet.hpp"
 
 
-#define VERLET_PARTICLE_COLOR 0x00FF00FF
+#define VERLET_PARTICLE_COLOR 0xFF00FF00
 #define VERLET_PIN_COLOR 0xFF0000FF
 #define VERLET_LINE_COLOR 0xFFFFFFFF
 #define WORLD_WIDTH 800
@@ -62,14 +62,29 @@ void Simulation::DestroySDL()
 void Simulation::CreateWorld(int width, int height)
 {
     world = new Verlet<float>(width, height);
+
+    // Line segments
+    std::vector<math::Vector2d<float> > segment_points = {
+        math::Vector2d<float>(0,0), math::Vector2d<float>(20,0),
+        math::Vector2d<float>(40,0), math::Vector2d<float>(60,0),
+        math::Vector2d<float>(80,0), math::Vector2d<float>(100,0),
+        math::Vector2d<float>(120,0), math::Vector2d<float>(140,0),
+        math::Vector2d<float>(160,0), math::Vector2d<float>(180,0),
+        math::Vector2d<float>(200,0), math::Vector2d<float>(220,0),
+        math::Vector2d<float>(240,0), math::Vector2d<float>(260,0),
+        math::Vector2d<float>(280,0), math::Vector2d<float>(300,0),
+        math::Vector2d<float>(320,0), math::Vector2d<float>(340,0),
+        math::Vector2d<float>(360,0), math::Vector2d<float>(380,0),
+        math::Vector2d<float>(400,0), math::Vector2d<float>(420,0),
+        math::Vector2d<float>(440,0), math::Vector2d<float>(460,0),
+        math::Vector2d<float>(480,0), math::Vector2d<float>(500,0)
+    };
+    math::Vector2d<float> position_offset(70, 30);
+    float stiffness = 0.2;
     
-    // entities
-    std::vector<math::Vector2d<float> > segment_points = { math::Vector2d<float>(20,10), math::Vector2d<float>(40,10),
-        math::Vector2d<float>(60,10), math::Vector2d<float>(80,10), math::Vector2d<float>(100,10) };
-    
-    Composite<float>* segment = LineSegments<float>(segment_points, 0.02);
-    (*segment).Pin(0);
-    (*segment).Pin(4);
+    Composite<float>* segment = LineSegments<float>(segment_points, position_offset, stiffness);
+    segment->Pin(0);
+    segment->Pin(segment_points.size() - 1);
     world->AddComposite(segment);
 }
 
@@ -119,8 +134,9 @@ void Simulation::Update()
 
 void Simulation::Draw()
 {
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
-    
+
     for (auto compositeIt = world->composites.begin(); compositeIt != world->composites.end(); compositeIt++)
     {
         for (auto constraintIt = (*compositeIt)->constraints.begin();
@@ -130,21 +146,20 @@ void Simulation::Draw()
             if (dynamic_cast<PinConstraint<float>*>(*constraintIt) != nullptr)
             {
                 PinConstraint<float>* pin_constraint = dynamic_cast<PinConstraint<float>*>(*constraintIt);
-                math::Vector2d<float> position = pin_constraint->particle.position;
-                filledCircleColor(renderer, position.x, position.y, 20, VERLET_PIN_COLOR);
+                math::Vector2d<float>* position = &pin_constraint->particle->position;
+                filledCircleColor(renderer, position->x, position->y, 5, VERLET_PIN_COLOR);
             }
             //DistanceConstraint
             else if (dynamic_cast<DistanceConstraint<float>*>(*constraintIt) != nullptr)
             {
                 DistanceConstraint<float>* distance_constraint = dynamic_cast<DistanceConstraint<float>*>(*constraintIt);
-                math::Vector2d<float> position1 = distance_constraint->p1.position;
-                math::Vector2d<float> position2 = distance_constraint->p2.position;
-                lineColor(renderer, position1.x, position1.y, position2.x, position2.y, VERLET_LINE_COLOR);
-                filledCircleColor(renderer, position1.x, position1.y, 10, VERLET_PARTICLE_COLOR);
-                filledCircleColor(renderer, position2.x,position2.y, 10, VERLET_PARTICLE_COLOR);
+                math::Vector2d<float>* position1 = &distance_constraint->p1->position;
+                math::Vector2d<float>* position2 = &distance_constraint->p2->position;
+                lineColor(renderer, position1->x, position1->y, position2->x, position2->y, VERLET_LINE_COLOR);
+                filledCircleColor(renderer, position1->x, position1->y, 3, VERLET_PARTICLE_COLOR);
+                filledCircleColor(renderer, position2->x, position2->y, 3, VERLET_PARTICLE_COLOR);
             }
         }
     }
-    
     SDL_RenderPresent(renderer);
 }

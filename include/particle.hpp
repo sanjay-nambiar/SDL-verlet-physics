@@ -21,19 +21,8 @@ namespace physics
         }
         
         Particle(Particle<T>& particle)
-        : position(math::Vector2d<T>(particle.position)), last_position(math::Vector2d<T>(particle.position))
+        : position(math::Vector2d<T>(particle.position)), last_position(math::Vector2d<T>(particle.last_position))
         {
-        }
-        
-        void SetPosition(math::Vector2d<T>& position) {
-            this->last_position = this->position;
-            this->position = position;
-        }
-        
-        void operator=(const Particle<T>& particle)
-        {
-            position = particle.position;
-            last_position = particle.last_position;
         }
     };
 }

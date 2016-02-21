@@ -2,6 +2,7 @@
 #ifndef ____verlet__
 #define ____verlet__
 
+#include <iostream>
 
 #include "vector2d.hpp"
 #include "composite.hpp"
@@ -27,6 +28,11 @@ namespace physics
             if (particle->position.y > height-1)
             {
                 y = height-1;
+            }
+
+            if (particle->position.y < 0)
+            {
+                y = 0;
             }
             
             if (particle->position.x < 0)
@@ -65,6 +71,7 @@ namespace physics
         
         void Update(T step)
         {
+            // std::cout << "Velocities -> ";
             for (auto c = composites.begin(); c != composites.end(); ++c)
             {
                 for (auto p = (*c)->particles.begin(); p != (*c)->particles.end(); ++p)
@@ -73,12 +80,12 @@ namespace physics
                     math::Vector2d<T> velocity = ((*p)->position - (*p)->last_position) * friction;
 
                     // apply ground_friction
-                    if ((*p)->position.y >= height-1 && math::EuclideanLengthSquare<T>(velocity) > 0.000001)
-                    {
-                        T m = math::EuclideanLength<T>(velocity) ;
-                        velocity /= m;
-                        velocity *= (m * ground_friction);
-                    }
+                    // if ((*p)->position.y >= height-1 && math::EuclideanLengthSquare<T>(velocity) > 0.000001)
+                    // {
+                    //     T m = math::EuclideanLength<T>(velocity) ;
+                    //     velocity /= m;
+                    //     velocity *= (m * ground_friction);
+                    // }
 
                     // save last good state
                     (*p)->last_position = (*p)->position;
@@ -105,13 +112,13 @@ namespace physics
             }
 
             // bounds checking
-            for (auto c = composites.begin(); c != composites.end(); ++c)
-            {
-                for (auto p = (*c)->particles.begin(); p != (*c)->particles.end(); ++p)
-                {
-                    RestrictToBounds((*p));
-                }
-            }
+            // for (auto c = composites.begin(); c != composites.end(); ++c)
+            // {
+            //     for (auto p = (*c)->particles.begin(); p != (*c)->particles.end(); ++p)
+            //     {
+            //         RestrictToBounds((*p));
+            //     }
+            // }
         }
     };
 }

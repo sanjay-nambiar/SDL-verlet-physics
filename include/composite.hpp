@@ -57,14 +57,14 @@ namespace physics
 
         Constraint<T>* Pin(int index, math::Vector2d<T>& position)
         {
-            Constraint<T>* constraint = new PinConstraint<T>(*particles[index], position);
+            Constraint<T>* constraint = new PinConstraint<T>(particles[index], position);
             this->constraints.push_back(constraint);
             return constraint;
         }
 
         Constraint<T>* Pin(int index)
         {
-            return Pin(index, (*particles[index]).position);
+            return Pin(index, (particles[index])->position);
         }
     };
 }
