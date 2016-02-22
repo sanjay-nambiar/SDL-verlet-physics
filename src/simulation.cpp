@@ -113,23 +113,24 @@ inline math::Vector2d<float> Simulation::ScaleFromWorldToRenderer(math::Vector2d
 
 Simulation::Simulation()
 {
-    InitializeSDL();
+    // InitializeSDL();
     CreateWorld(WORLD_WIDTH, WORLD_HEIGHT);
 }
 
 Simulation::~Simulation()
 {
-    DestroySDL();
-    for (auto compositeIt = world->composites.begin(); compositeIt != world->composites.end(); compositeIt++)
+    // DestroySDL();
+    const std::vector<Composite<float>*>* const composites = world->composites;
+    for (auto compositeIt = composites->begin(); compositeIt != composites->end(); compositeIt++)
     {
-        for (auto constraintIt = (*compositeIt)->constraints.begin();
-             constraintIt != (*compositeIt)->constraints.end(); constraintIt++)
+        std::vector<Constraint<float>*>* constraints = &(*compositeIt)->constraints;
+        for (auto constraintIt = constraints->begin(); constraintIt != constraints->end(); constraintIt++)
         {
             delete (*constraintIt);
         }
 
-        for (auto particleIt = (*compositeIt)->particles.begin();
-             particleIt != (*compositeIt)->particles.end(); particleIt++)
+        std::vector<Particle<float>*>* particles = &(*compositeIt)->particles;
+        for (auto particleIt = particles->begin(); particleIt != particles->end(); particleIt++)
         {
             delete (*particleIt);
         }
@@ -170,37 +171,39 @@ void Simulation::Update()
 
 void Simulation::Draw()
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
+    // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    // SDL_RenderClear(renderer);
 
-    for (auto compositeIt = world->composites.begin(); compositeIt != world->composites.end(); compositeIt++)
+    const std::vector<Composite<float>*>* const composites = world->composites;
+    for (auto compositeIt = composites->begin(); compositeIt != composites->end(); compositeIt++)
     {
-        for (auto constraintIt = (*compositeIt)->constraints.begin();
-             constraintIt != (*compositeIt)->constraints.end(); constraintIt++)
+        std::vector<Constraint<float>*>* constraints = &(*compositeIt)->constraints;
+        for (auto constraintIt = constraints->begin();
+             constraintIt != constraints->end(); constraintIt++)
         {
             //PinConstraint
-            if (dynamic_cast<PinConstraint<float>*>(*constraintIt) != nullptr)
+            if ((*constraintIt)->type == PIN)
             {
-                PinConstraint<float>* pin_constraint = dynamic_cast<PinConstraint<float>*>(*constraintIt);
+                PinConstraint<float>* pin_constraint = static_cast<PinConstraint<float>*>(*constraintIt);
                 math::Vector2d<float>* position = &pin_constraint->particle->position;
                 math::Vector2d<float> scaledPosition = ScaleFromWorldToRenderer(*position);
-                filledCircleColor(renderer, scaledPosition.x, scaledPosition.y, 5, VERLET_PIN_COLOR);
+                // filledCircleColor(renderer, scaledPosition.x, scaledPosition.y, 5, VERLET_PIN_COLOR);
             }
             //DistanceConstraint
-            else if (dynamic_cast<DistanceConstraint<float>*>(*constraintIt) != nullptr)
+            else if ((*constraintIt)->type == DISTANCE)
             {
-                DistanceConstraint<float>* distance_constraint = dynamic_cast<DistanceConstraint<float>*>(*constraintIt);
+                DistanceConstraint<float>* distance_constraint = static_cast<DistanceConstraint<float>*>(*constraintIt);
                 math::Vector2d<float>* position1 = &distance_constraint->p1->position;
                 math::Vector2d<float>* position2 = &distance_constraint->p2->position;
                 math::Vector2d<float> scaledPosition1 = ScaleFromWorldToRenderer(*position1);
                 math::Vector2d<float> scaledPosition2 = ScaleFromWorldToRenderer(*position2);
 
-                lineColor(renderer, scaledPosition1.x, scaledPosition1.y, 
-                    scaledPosition2.x, scaledPosition2.y, VERLET_LINE_COLOR);
-                filledCircleColor(renderer, scaledPosition1.x, scaledPosition1.y, 3, VERLET_PARTICLE_COLOR);
-                filledCircleColor(renderer, scaledPosition2.x, scaledPosition2.y, 3, VERLET_PARTICLE_COLOR);
+                // lineColor(renderer, scaledPosition1.x, scaledPosition1.y, 
+                //     scaledPosition2.x, scaledPosition2.y, VERLET_LINE_COLOR);
+                // filledCircleColor(renderer, scaledPosition1.x, scaledPosition1.y, 3, VERLET_PARTICLE_COLOR);
+                // filledCircleColor(renderer, scaledPosition2.x, scaledPosition2.y, 3, VERLET_PARTICLE_COLOR);
             }
         }
     }
-    SDL_RenderPresent(renderer);
+    // SDL_RenderPresent(renderer);
 }

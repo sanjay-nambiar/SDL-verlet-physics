@@ -53,11 +53,11 @@ namespace physics
         const T& friction;
         const T& ground_friction;
         const math::Vector2d<T>& gravity;
-        const std::vector<Composite<T>*>& composites;
+        const std::vector<Composite<T>*>* const composites;
         
         Verlet(T width, T height)
         : width(_width), height(_height), friction(_friction), ground_friction(_ground_friction),
-        gravity(_gravity), composites(_composites)
+        gravity(_gravity), composites(&_composites)
         {
             _gravity.Set(0, 0.2);
             _friction = 1;
@@ -71,10 +71,10 @@ namespace physics
         
         void Update(T step)
         {
-            // std::cout << "Velocities -> ";
-            for (auto c = composites.begin(); c != composites.end(); ++c)
+            for (auto c = _composites.begin(); c != _composites.end(); ++c)
             {
-                for (auto p = (*c)->particles.begin(); p != (*c)->particles.end(); ++p)
+                std::vector<Particle<T>*>* particles = &(*c)->particles;
+                for (auto p = particles->begin(); p != particles->end(); ++p)
                 {
                     // calculate velocity
                     math::Vector2d<T> velocity = ((*p)->position - (*p)->last_position) * friction;
@@ -100,11 +100,12 @@ namespace physics
 
             // relax
             T stepCoef = 1/step;
-            for (auto c = composites.begin(); c != composites.end(); ++c)
+            for (auto c = _composites.begin(); c != _composites.end(); ++c)
             {
                 for (int i = 0; i < step; ++i)
                 {
-                    for (auto j = (*c)->constraints.begin(); j != (*c)->constraints.end(); ++j)
+                    std::vector<Constraint<T>*>* constraints = &(*c)->constraints;
+                    for (auto j = constraints->begin(); j != constraints->end(); ++j)
                     {
                         (*j)->Relax(stepCoef);
                     }

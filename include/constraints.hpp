@@ -7,10 +7,13 @@
 
 namespace physics
 {
+    enum ConstraintType {PIN, DISTANCE, ANGULAR};
+
     template<class T>
     class Constraint
     {
     public:
+        ConstraintType type;
         virtual void Relax(T stepCoeff) = 0;
     };
 
@@ -23,8 +26,10 @@ namespace physics
         math::Vector2d<T> position;
         
         PinConstraint(physics::Particle<T>* particle, math::Vector2d<T>& position)
-        : particle(particle), position(position)
         {
+            this->particle = particle;
+            this->position = position;
+            this->type = PIN;
         }
 
         void Relax(T stepCoeff)
@@ -50,8 +55,12 @@ namespace physics
         T distance;
 
         DistanceConstraint(physics::Particle<T>* p1, physics::Particle<T>* p2, T stiffness)
-        : p1(p1), p2(p2), stiffness(stiffness), distance(math::EuclideanLength<T>(p1->position - p2->position))
         {
+            this->p1 = p1;
+            this->p2 = p2;
+            this->stiffness = stiffness;
+            this->distance = math::EuclideanLength<T>(p1->position - p2->position);
+            this->type = DISTANCE;
         }
 
         void Relax(T stepCoeff)
@@ -83,9 +92,13 @@ namespace physics
         T& angle_in_radians;
 
         AngularConstraint(physics::Particle<T>* p1, physics::Particle<T>* vertex, physics::Particle<T>* p2, T stiffness)
-        : p1(p1), p2(p2), vertex(vertex), stiffness(stiffness), 
-            angle_in_radians(math::Angle(vertex->position, p1->position, p2->position))
         {
+            this->p1 = p1;
+            this->p2 = p2;
+            this->vertex = vertex;
+            this->stiffness = stiffness;
+            this->angle_in_radians = math::Angle(vertex->position, p1->position, p2->position);
+            this->type = ANGULAR;
         }
 
         void Relax(T stepCoeff)

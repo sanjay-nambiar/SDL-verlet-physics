@@ -1,0 +1,96 @@
+--------------------------------------------------------------------------------
+Profile data file 'callgrind/callgrind.out.38781' (creator: callgrind-3.11.0)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 347055347
+Trigger: Program termination
+Profiled target:  bin/verlet-magic (PID 38781, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   src/main.cpp
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+           Ir 
+--------------------------------------------------------------------------------
+2,712,674,765  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+         Ir  file:function
+--------------------------------------------------------------------------------
+325,520,013  ???:math::Vector2d<float>::Set(float, float) [bin/verlet-magic]
+320,000,000  include/constraints.hpp:physics::DistanceConstraint<float>::Relax(float) [bin/verlet-magic]
+248,740,000  include/verlet.hpp:physics::Verlet<float>::Update(float)
+233,580,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/iterator:physics::Verlet<float>::Update(float)
+204,480,600  ???:math::Vector2d<float> math::operator-<float>(math::Vector2d<float> const&, math::Vector2d<float> const&) [bin/verlet-magic]
+171,760,000  ???:math::Vector2d<float>::operator+=(math::Vector2d<float> const&) [bin/verlet-magic]
+161,281,248  ???:math::Vector2d<float>::Vector2d(float, float)'2 [bin/verlet-magic]
+152,000,000  ???:math::Vector2d<float>::operator-=(math::Vector2d<float> const&) [bin/verlet-magic]
+144,000,450  ???:float math::EuclideanLengthSquare<float>(math::Vector2d<float> const&) [bin/verlet-magic]
+131,041,014  ???:math::Vector2d<float>::Vector2d(float, float) [bin/verlet-magic]
+112,000,000  include/vector2d.hpp:math::Vector2d<float>::operator*=(float const&) [bin/verlet-magic]
+ 99,600,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/vector:physics::Verlet<float>::Update(float)
+ 89,480,899  ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&)'2 [bin/verlet-magic]
+ 38,027,461  ???:ImageLoaderMachOCompressed::trieWalk(unsigned char const*, unsigned char const*, char const*) [/usr/lib/dyld]
+ 31,000,000  src/simulation.cpp:Simulation::Draw() [bin/verlet-magic]
+ 24,000,000  ???:math::Vector2d<float>::operator*=(float const&)
+ 23,887,675  ???:_mapStrHash(_NXMapTable*, void const*) [/usr/lib/libobjc.A.dylib]
+ 19,761,482  include/vector2d.hpp:math::Vector2d<float>::Vector2d(math::Vector2d<float> const&)'2 [bin/verlet-magic]
+ 18,320,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/iterator:Simulation::Draw()
+ 17,400,405  include/vector2d.hpp:math::Vector2d<float>::operator=(math::Vector2d<float> const&) [bin/verlet-magic]
+ 15,864,832  ???:ImageLoaderMachOCompressed::rebase(ImageLoader::LinkContext const&) [/usr/lib/dyld]
+ 13,540,093  ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) [bin/verlet-magic]
+ 11,440,858  include/vector2d.hpp:math::Vector2d<float>::Vector2d(math::Vector2d<float> const&) [bin/verlet-magic]
+ 11,440,000  src/simulation.cpp:Simulation::ScaleFromWorldToRenderer(math::Vector2d<float>) const [bin/verlet-magic]
+  9,600,000  include/constraints.hpp:physics::PinConstraint<float>::Relax(float) [bin/verlet-magic]
+  6,400,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/vector:Simulation::Draw()
+  5,941,186  ???:ImageLoaderMachOCompressed::eachBind(ImageLoader::LinkContext const&, unsigned long (ImageLoaderMachOCompressed::*)(ImageLoader::LinkContext const&, unsigned long, unsigned char, char const*, unsigned char, long, long, char const*, ImageLoaderMachOCompressed::LastLookup*, bool)) [/usr/lib/dyld]
+  4,656,647  ???:NXMapInsert [/usr/lib/libobjc.A.dylib]
+  4,493,712  ???:_mapStrIsEqual(_NXMapTable*, void const*, void const*) [/usr/lib/libobjc.A.dylib]
+  4,451,608  ???:ImageLoaderMachO::findExportedSymbol(char const*, bool, ImageLoader const**) const'2 [/usr/lib/dyld]
+  4,337,324  ???:ImageLoaderMachOCompressed::bindAt(ImageLoader::LinkContext const&, unsigned long, unsigned char, char const*, unsigned char, long, long, char const*, ImageLoaderMachOCompressed::LastLookup*, bool) [/usr/lib/dyld]
+  4,301,598  ???:_NXMapMember(_NXMapTable*, void const*, void**) [/usr/lib/libobjc.A.dylib]
+  4,160,000  ???:Simulation::ScaleFromWorldToRenderer(math::Vector2d<float>) const
+  4,067,274  ???:ImageLoaderMachOCompressed::resolve(ImageLoader::LinkContext const&, char const*, unsigned char, long, ImageLoader const**, ImageLoaderMachOCompressed::LastLookup*, bool) [/usr/lib/dyld]
+  3,660,024  ???:ImageLoaderMachO::bindLocation(ImageLoader::LinkContext const&, unsigned long, unsigned long, ImageLoader const*, unsigned char, char const*, long, char const*) [/usr/lib/dyld]
+  2,903,768  ???:__sel_registerName(char const*, int, int) [/usr/lib/libobjc.A.dylib]
+  2,781,566  ???:_platform_strcmp [/usr/lib/system/libsystem_platform.dylib]
+  2,776,589  ???:NXMapInsert'2 [/usr/lib/libobjc.A.dylib]
+  2,723,148  ???:ImageLoaderMachOCompressed::libReExported(unsigned int) const [/usr/lib/dyld]
+  2,156,004  ???:strcmp [/usr/lib/dyld]
+
+--------------------------------------------------------------------------------
+-- User-annotated source: src/main.cpp
+--------------------------------------------------------------------------------
+     Ir 
+
+      .  
+      .  #include "simulation.hpp"
+      .  
+      .  int main()
+      5  {
+      1      Simulation sim;
+103,558  => /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/src/simulation.cpp:Simulation::Simulation() (1x)
+120,003      for(int i=0; i<20000; i++)
+      .      // while(sim.HandleInput())
+      .      {    	
+ 60,000          sim.Update();
+2,423,100,000  => /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/src/simulation.cpp:Simulation::Update() (20000x)
+ 60,000          sim.Draw();
+137,880,000  => /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/src/simulation.cpp:Simulation::Draw() (20000x)
+ 20,000      }
+      .      
+      2      return 0;
+      6  }
+ 40,263  => /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/src/simulation.cpp:Simulation::~Simulation() (1x)
+
+--------------------------------------------------------------------------------
+Ir 
+--------------------------------------------------------------------------------
+ 0  percentage of events annotated
+

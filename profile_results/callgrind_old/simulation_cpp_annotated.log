@@ -1,0 +1,254 @@
+--------------------------------------------------------------------------------
+Profile data file 'callgrind/callgrind.out.37883' (creator: callgrind-3.11.0)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 381825761
+Trigger: Program termination
+Profiled target:  bin/verlet-magic (PID 37883, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   src/simulation.cpp
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+           Ir 
+--------------------------------------------------------------------------------
+2,990,783,362  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+         Ir  file:function
+--------------------------------------------------------------------------------
+325,520,013  ???:math::Vector2d<float>::Set(float, float) [bin/verlet-magic]
+320,000,000  include/constraints.hpp:physics::DistanceConstraint<float>::Relax(float) [bin/verlet-magic]
+285,740,000  include/verlet.hpp:physics::Verlet<float>::Update(float) [bin/verlet-magic]
+243,080,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/iterator:physics::Verlet<float>::Update(float)
+204,480,600  ???:math::Vector2d<float> math::operator-<float>(math::Vector2d<float> const&, math::Vector2d<float> const&) [bin/verlet-magic]
+171,760,000  ???:math::Vector2d<float>::operator+=(math::Vector2d<float> const&) [bin/verlet-magic]
+161,281,248  ???:math::Vector2d<float>::Vector2d(float, float)'2 [bin/verlet-magic]
+152,000,000  ???:math::Vector2d<float>::operator-=(math::Vector2d<float> const&) [bin/verlet-magic]
+144,000,450  ???:float math::EuclideanLengthSquare<float>(math::Vector2d<float> const&) [bin/verlet-magic]
+136,000,000  ???:math::Vector2d<float>::operator*=(float const&) [bin/verlet-magic]
+131,041,014  ???:math::Vector2d<float>::Vector2d(float, float) [bin/verlet-magic]
+ 99,600,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/vector:physics::Verlet<float>::Update(float)
+ 98,800,021  ???:__dynamic_cast [/usr/lib/libc++abi.dylib]
+ 89,480,897  ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&)'2 [bin/verlet-magic]
+ 56,040,000  src/simulation.cpp:Simulation::Draw()
+ 38,054,554  ???:ImageLoaderMachOCompressed::trieWalk(unsigned char const*, unsigned char const*, char const*) [/usr/lib/dyld]
+ 31,320,000  ???:__cxxabiv1::__si_class_type_info::search_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int, bool) const [/usr/lib/libc++abi.dylib]
+ 27,000,000  ???:__cxxabiv1::__class_type_info::search_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int, bool) const [/usr/lib/libc++abi.dylib]
+ 23,887,675  ???:_mapStrHash(_NXMapTable*, void const*) [/usr/lib/libobjc.A.dylib]
+ 19,761,520  ???:math::Vector2d<float>::Vector2d(math::Vector2d<float> const&)'2 [bin/verlet-magic]
+ 18,320,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/iterator:Simulation::Draw()
+ 17,500,000  ???:__cxxabiv1::__si_class_type_info::search_below_dst(__cxxabiv1::__dynamic_cast_info*, void const*, int, bool) const [/usr/lib/libc++abi.dylib]
+ 17,400,375  ???:math::Vector2d<float>::operator=(math::Vector2d<float> const&) [bin/verlet-magic]
+ 17,280,000  ???:__cxxabiv1::__class_type_info::process_static_type_above_dst(__cxxabiv1::__dynamic_cast_info*, void const*, void const*, int) const [/usr/lib/libc++abi.dylib]
+ 15,864,832  ???:ImageLoaderMachOCompressed::rebase(ImageLoader::LinkContext const&) [/usr/lib/dyld]
+ 15,120,098  ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) [bin/verlet-magic]
+ 13,000,000  ???:__cxxabiv1::__class_type_info::search_below_dst(__cxxabiv1::__dynamic_cast_info*, void const*, int, bool) const [/usr/lib/libc++abi.dylib]
+ 11,440,880  ???:math::Vector2d<float>::Vector2d(math::Vector2d<float> const&) [bin/verlet-magic]
+ 11,440,000  src/simulation.cpp:Simulation::ScaleFromWorldToRenderer(math::Vector2d<float>) const [bin/verlet-magic]
+  9,600,000  include/constraints.hpp:physics::PinConstraint<float>::Relax(float) [bin/verlet-magic]
+  6,400,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/vector:Simulation::Draw()
+  5,941,202  ???:ImageLoaderMachOCompressed::eachBind(ImageLoader::LinkContext const&, unsigned long (ImageLoaderMachOCompressed::*)(ImageLoader::LinkContext const&, unsigned long, unsigned char, char const*, unsigned char, long, long, char const*, ImageLoaderMachOCompressed::LastLookup*, bool)) [/usr/lib/dyld]
+  4,656,649  ???:NXMapInsert [/usr/lib/libobjc.A.dylib]
+  4,493,712  ???:_mapStrIsEqual(_NXMapTable*, void const*, void const*) [/usr/lib/libobjc.A.dylib]
+  4,457,200  ???:ImageLoaderMachO::findExportedSymbol(char const*, bool, ImageLoader const**) const'2 [/usr/lib/dyld]
+  4,337,324  ???:ImageLoaderMachOCompressed::bindAt(ImageLoader::LinkContext const&, unsigned long, unsigned char, char const*, unsigned char, long, long, char const*, ImageLoaderMachOCompressed::LastLookup*, bool) [/usr/lib/dyld]
+  4,301,598  ???:_NXMapMember(_NXMapTable*, void const*, void**) [/usr/lib/libobjc.A.dylib]
+  4,160,000  ???:Simulation::ScaleFromWorldToRenderer(math::Vector2d<float>) const
+  4,067,542  ???:ImageLoaderMachOCompressed::resolve(ImageLoader::LinkContext const&, char const*, unsigned char, long, ImageLoader const**, ImageLoaderMachOCompressed::LastLookup*, bool) [/usr/lib/dyld]
+  3,660,168  ???:ImageLoaderMachO::bindLocation(ImageLoader::LinkContext const&, unsigned long, unsigned long, ImageLoader const*, unsigned char, char const*, long, char const*) [/usr/lib/dyld]
+  2,903,768  ???:__sel_registerName(char const*, int, int) [/usr/lib/libobjc.A.dylib]
+  2,781,580  ???:_platform_strcmp [/usr/lib/system/libsystem_platform.dylib]
+  2,776,589  ???:NXMapInsert'2 [/usr/lib/libobjc.A.dylib]
+  2,726,469  ???:ImageLoaderMachOCompressed::libReExported(unsigned int) const [/usr/lib/dyld]
+
+--------------------------------------------------------------------------------
+-- User-annotated source: src/simulation.cpp
+--------------------------------------------------------------------------------
+        Ir 
+
+-- line 67 ----------------------------------------
+         .  void Simulation::DestroySDL()
+         .  {
+         .      SDL_DestroyRenderer(renderer);
+         .      SDL_DestroyWindow(window);
+         .      SDL_Quit();
+         .  }
+         .  
+         .  void Simulation::CreateWorld(int width, int height)
+        10  {
+         2      world_width = width;
+         2      world_height = height;
+        11      world_aspect_ratio = width / height;
+        15      world = new Verlet<float>(width, height);
+    22,832  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+         .  
+         .      // Line segments
+        58      std::vector<math::Vector2d<float> > segment_points = {
+        12          math::Vector2d<float>(0,0), math::Vector2d<float>(20,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(40,0), math::Vector2d<float>(60,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(80,0), math::Vector2d<float>(100,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(120,0), math::Vector2d<float>(140,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(160,0), math::Vector2d<float>(180,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(200,0), math::Vector2d<float>(220,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(240,0), math::Vector2d<float>(260,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(280,0), math::Vector2d<float>(300,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(320,0), math::Vector2d<float>(340,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(360,0), math::Vector2d<float>(380,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(400,0), math::Vector2d<float>(420,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        10          math::Vector2d<float>(440,0), math::Vector2d<float>(460,0),
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+        12          math::Vector2d<float>(480,0), math::Vector2d<float>(500,0)
+        62  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+         .      };
+         5      math::Vector2d<float> position_offset(140, 30);
+        31  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1x)
+         1      float stiffness = 0.2;
+         .      
+         8      Composite<float>* segment = LineSegments<float>(segment_points, position_offset, stiffness);
+    47,714  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1x)
+         5      segment->Pin(0);
+    25,662  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1x)
+         8      segment->Pin(segment_points.size() - 1);
+       678  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1x)
+         6      world->AddComposite(segment);
+       968  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1x)
+         8  }
+     1,252  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1x)
+         .  
+         .  inline math::Vector2d<float> Simulation::ScaleFromWorldToRenderer(math::Vector2d<float> position) const
+ 5,200,000  {
+         .      return math::Vector2d<float>(position.x, position.y);
+         .  }
+         .  
+         .  
+         .  // Public methods
+         .  
+         .  Simulation::Simulation()
+        13  {
+   102,769  => src/simulation.cpp:Simulation::Simulation()'2 (1x)
+         .      // InitializeSDL();
+         1      CreateWorld(WORLD_WIDTH, WORLD_HEIGHT);
+   102,758  => src/simulation.cpp:Simulation::CreateWorld(int, int) (1x)
+         6  }
+         .  
+         .  Simulation::~Simulation()
+        12  {
+    41,632  => src/simulation.cpp:Simulation::~Simulation()'2 (1x)
+         .      // DestroySDL();
+         3      const std::vector<Composite<float>*>* const composites = world->composites;
+        35      for (auto compositeIt = composites->begin(); compositeIt != composites->end(); compositeIt++)
+         .      {
+         5          std::vector<Constraint<float>*>* constraints = &(*compositeIt)->constraints;
+       477          for (auto constraintIt = constraints->begin(); constraintIt != constraints->end(); constraintIt++)
+         .          {
+       243              delete (*constraintIt);
+    13,521  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (27x)
+        54          }
+         .  
+         4          std::vector<Particle<float>*>* particles = &(*compositeIt)->particles;
+       459          for (auto particleIt = particles->begin(); particleIt != particles->end(); particleIt++)
+         .          {
+       234              delete (*particleIt);
+    19,369  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (26x)
+        52          }
+         .  
+        10          delete (*compositeIt);
+     3,651  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+         2      }
+         9      delete this->world;
+     1,249  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (2x)
+         6  }
+         .  
+         .  bool Simulation::HandleInput()
+         .  {
+         .      SDL_Event event;
+         .  
+         .      if (SDL_PollEvent(&event))
+         .      {
+         .          if (event.type == SDL_QUIT)
+-- line 149 ----------------------------------------
+-- line 160 ----------------------------------------
+         .                      return false;
+         .              }
+         .          }
+         .      }
+         .      return true;
+         .  }
+         .  
+         .  void Simulation::Update()
+   120,000  {
+    40,000      world->Update(16);
+2,469,160,000  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (20000x)
+    60,000  }
+         .  
+         .  void Simulation::Draw()
+         .  {
+         .      // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+         .      // SDL_RenderClear(renderer);
+         .  
+         .      const std::vector<Composite<float>*>* const composites = world->composites;
+   640,000      for (auto compositeIt = composites->begin(); compositeIt != composites->end(); compositeIt++)
+         .      {
+   100,000          std::vector<Constraint<float>*>* constraints = &(*compositeIt)->constraints;
+ 3,980,000          for (auto constraintIt = constraints->begin();
+ 5,520,000               constraintIt != constraints->end(); constraintIt++)
+         .          {
+         .              //PinConstraint
+11,380,000              if (dynamic_cast<PinConstraint<float>*>(*constraintIt) != nullptr)
+70,284,815  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (540000x)
+         .              {
+   840,000                  PinConstraint<float>* pin_constraint = dynamic_cast<PinConstraint<float>*>(*constraintIt);
+ 5,240,000  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (40000x)
+   120,000                  math::Vector2d<float>* position = &pin_constraint->particle->position;
+   240,000                  math::Vector2d<float> scaledPosition = ScaleFromWorldToRenderer(*position);
+ 3,160,000  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (80000x)
+         .                  // filledCircleColor(renderer, scaledPosition.x, scaledPosition.y, 5, VERLET_PIN_COLOR);
+   540,000              }
+         .              //DistanceConstraint
+11,000,000              else if (dynamic_cast<DistanceConstraint<float>*>(*constraintIt) != nullptr)
+65,500,000  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (500000x)
+         .              {
+10,500,000                  DistanceConstraint<float>* distance_constraint = dynamic_cast<DistanceConstraint<float>*>(*constraintIt);
+65,500,000  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (500000x)
+ 1,500,000                  math::Vector2d<float>* position1 = &distance_constraint->p1->position;
+ 1,500,000                  math::Vector2d<float>* position2 = &distance_constraint->p2->position;
+ 3,500,000                  math::Vector2d<float> scaledPosition1 = ScaleFromWorldToRenderer(*position1);
+39,500,000  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1000000x)
+ 3,500,000                  math::Vector2d<float> scaledPosition2 = ScaleFromWorldToRenderer(*position2);
+39,500,000  => ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&) (1000000x)
+         .  
+         .                  // lineColor(renderer, scaledPosition1.x, scaledPosition1.y, 
+         .                  //     scaledPosition2.x, scaledPosition2.y, VERLET_LINE_COLOR);
+         .                  // filledCircleColor(renderer, scaledPosition1.x, scaledPosition1.y, 3, VERLET_PARTICLE_COLOR);
+         .                  // filledCircleColor(renderer, scaledPosition2.x, scaledPosition2.y, 3, VERLET_PARTICLE_COLOR);
+         .              }
+ 1,080,000          }
+    40,000      }
+         .      // SDL_RenderPresent(renderer);
+    60,000  }
+
+ 6,240,000  <counts for unidentified lines in src/simulation.cpp>
+
+--------------------------------------------------------------------------------
+Ir 
+--------------------------------------------------------------------------------
+ 2  percentage of events annotated
+
