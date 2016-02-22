@@ -120,6 +120,23 @@ Simulation::Simulation()
 Simulation::~Simulation()
 {
     DestroySDL();
+    for (auto compositeIt = world->composites.begin(); compositeIt != world->composites.end(); compositeIt++)
+    {
+        for (auto constraintIt = (*compositeIt)->constraints.begin();
+             constraintIt != (*compositeIt)->constraints.end(); constraintIt++)
+        {
+            delete (*constraintIt);
+        }
+
+        for (auto particleIt = (*compositeIt)->particles.begin();
+             particleIt != (*compositeIt)->particles.end(); particleIt++)
+        {
+            delete (*particleIt);
+        }
+
+        delete (*compositeIt);
+    }
+    delete this->world;
 }
 
 bool Simulation::HandleInput()

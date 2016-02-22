@@ -11,13 +11,13 @@ private:
     float world_width;
     float world_height;
     float world_aspect_ratio;
-    
     int renderer_width;
     int renderer_height;
-    
-    physics::Verlet<float>* world;
+
     SDL_Window* window;
     SDL_Renderer* renderer;
+
+    physics::Verlet<float>* world;
 
     int InitializeSDL();
     void DestroySDL();
