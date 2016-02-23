@@ -1,0 +1,63 @@
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         32768 B, 64 B, 8-way associative
+LL cache:         3145728 B, 64 B, 12-way associative
+Command:          bin/verlet-magic
+Data file:        cachegrind.out.39504
+Events recorded:  Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Events shown:     Dr Dw
+Event sort order: Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Thresholds:       0.1 100 100 100 100 100 100 100 100
+Include dirs:     
+User annotated:   
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+           Dr          Dw 
+--------------------------------------------------------------------------------
+1,304,089,394 809,693,054  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+         Dr          Dw  file:function
+--------------------------------------------------------------------------------
+125,200,005 150,240,006  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float>::Set(float, float)
+128,000,000 112,000,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/constraints.hpp:physics::DistanceConstraint<float>::Relax(float)
+100,800,780 131,041,014  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float>::Vector2d(float, float)
+ 82,400,000  73,440,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/verlet.hpp:physics::Verlet<float>::Update(float)
+127,820,000  77,400,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/iterator:physics::Verlet<float>::Update(float)
+127,800,375  17,040,050  ???:math::Vector2d<float> math::operator-<float>(math::Vector2d<float> const&, math::Vector2d<float> const&)
+112,000,350           0  ???:float math::EuclideanLengthSquare<float>(math::Vector2d<float> const&)
+ 90,400,000   9,040,000  ???:math::Vector2d<float>::operator+=(math::Vector2d<float> const&)
+ 80,000,000   8,000,000  ???:math::Vector2d<float>::operator-=(math::Vector2d<float> const&)
+ 98,340,988   1,040,002  ???:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&)
+ 49,800,000  49,800,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/vector:physics::Verlet<float>::Update(float)
+ 64,000,000   8,000,000  ???:math::Vector2d<float>::operator*=(float const&)
+  9,040,000  27,120,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float>::operator+=(math::Vector2d<float> const&)
+          0  25,560,075  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float> math::operator-<float>(math::Vector2d<float> const&, math::Vector2d<float> const&)
+  8,000,000  24,000,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float>::operator*=(float const&)
+  8,000,000  24,000,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float>::operator-=(math::Vector2d<float> const&)
+  4,326,283     129,261  ???:ImageLoaderMachOCompressed::trieWalk(unsigned char const*, unsigned char const*, char const*)
+ 13,521,014  11,440,858  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float>::Vector2d(math::Vector2d<float> const&)
+ 10,340,000   9,520,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/src/simulation.cpp:Simulation::Draw()
+          0  16,000,050  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:float math::EuclideanLengthSquare<float>(math::Vector2d<float> const&)
+  4,409,931           0  ???:_mapStrHash(_NXMapTable*, void const*)
+ 10,560,000   6,000,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/iterator:Simulation::Draw()
+ 10,440,243   5,800,135  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float>::operator=(math::Vector2d<float> const&)
+  5,129,229      84,021  ???:ImageLoaderMachOCompressed::rebase(ImageLoader::LinkContext const&)
+  7,280,000   2,080,000  ???:Simulation::ScaleFromWorldToRenderer(math::Vector2d<float>) const
+  3,200,000   3,200,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/constraints.hpp:physics::PinConstraint<float>::Relax(float)
+  2,041,870   1,316,406  ???:NXMapInsert
+  3,200,000   3,200,000  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/vector:Simulation::Draw()
+  1,214,977     801,295  ???:ImageLoaderMachOCompressed::eachBind(ImageLoader::LinkContext const&, unsigned long (ImageLoaderMachOCompressed::*)(ImageLoader::LinkContext const&, unsigned long, unsigned char, char const*, unsigned char, long, long, char const*, ImageLoaderMachOCompressed::LastLookup*, bool))
+  1,555,400     756,822  ???:ImageLoaderMachO::findExportedSymbol(char const*, bool, ImageLoader const**) const
+          0   2,080,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/src/simulation.cpp:Simulation::ScaleFromWorldToRenderer(math::Vector2d<float>) const
+    976,452     293,226  ???:_mapStrIsEqual(_NXMapTable*, void const*, void const*)
+  1,311,284   1,311,284  ???:ImageLoaderMachOCompressed::bindAt(ImageLoader::LinkContext const&, unsigned long, unsigned char, char const*, unsigned char, long, long, char const*, ImageLoaderMachOCompressed::LastLookup*, bool)
+  1,382,927     668,229  ???:_NXMapMember(_NXMapTable*, void const*, void**)
+  1,387,934     911,572  ???:ImageLoaderMachOCompressed::resolve(ImageLoader::LinkContext const&, char const*, unsigned char, long, ImageLoader const**, ImageLoaderMachOCompressed::LastLookup*, bool)
+  1,118,524     711,188  ???:ImageLoaderMachO::bindLocation(ImageLoader::LinkContext const&, unsigned long, unsigned long, ImageLoader const*, unsigned char, char const*, long, char const*)
+          0   1,560,000  /Users/snnambia/Documents/Personal/Projects/SDL/verlet-magic/include/vector2d.hpp:math::Vector2d<float> math::operator*<float>(math::Vector2d<float> const&, float const&)
+    546,535     388,418  ???:__sel_registerName(char const*, int, int)
+    597,748      58,477  ???:_platform_strcmp
+  1,210,288     302,572  ???:ImageLoaderMachOCompressed::libReExported(unsigned int) const
+
