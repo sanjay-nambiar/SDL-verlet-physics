@@ -113,13 +113,13 @@ inline math::Vector2d<float> Simulation::ScaleFromWorldToRenderer(math::Vector2d
 
 Simulation::Simulation()
 {
-    // InitializeSDL();
+    InitializeSDL();
     CreateWorld(WORLD_WIDTH, WORLD_HEIGHT);
 }
 
 Simulation::~Simulation()
 {
-    // DestroySDL();
+    DestroySDL();
     const std::vector<Composite<float>*>* const composites = world->composites;
     for (auto compositeIt = composites->begin(); compositeIt != composites->end(); compositeIt++)
     {
@@ -171,8 +171,8 @@ void Simulation::Update()
 
 void Simulation::Draw()
 {
-    // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    // SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
 
     const std::vector<Composite<float>*>* const composites = world->composites;
     for (auto compositeIt = composites->begin(); compositeIt != composites->end(); compositeIt++)
@@ -187,7 +187,7 @@ void Simulation::Draw()
                 PinConstraint<float>* pin_constraint = static_cast<PinConstraint<float>*>(*constraintIt);
                 math::Vector2d<float>* position = &pin_constraint->particle->position;
                 math::Vector2d<float> scaledPosition = ScaleFromWorldToRenderer(*position);
-                // filledCircleColor(renderer, scaledPosition.x, scaledPosition.y, 5, VERLET_PIN_COLOR);
+                filledCircleColor(renderer, scaledPosition.x, scaledPosition.y, 5, VERLET_PIN_COLOR);
             }
             //DistanceConstraint
             else if ((*constraintIt)->type == DISTANCE)
@@ -198,12 +198,12 @@ void Simulation::Draw()
                 math::Vector2d<float> scaledPosition1 = ScaleFromWorldToRenderer(*position1);
                 math::Vector2d<float> scaledPosition2 = ScaleFromWorldToRenderer(*position2);
 
-                // lineColor(renderer, scaledPosition1.x, scaledPosition1.y, 
-                //     scaledPosition2.x, scaledPosition2.y, VERLET_LINE_COLOR);
-                // filledCircleColor(renderer, scaledPosition1.x, scaledPosition1.y, 3, VERLET_PARTICLE_COLOR);
-                // filledCircleColor(renderer, scaledPosition2.x, scaledPosition2.y, 3, VERLET_PARTICLE_COLOR);
+                lineColor(renderer, scaledPosition1.x, scaledPosition1.y, 
+                    scaledPosition2.x, scaledPosition2.y, VERLET_LINE_COLOR);
+                filledCircleColor(renderer, scaledPosition1.x, scaledPosition1.y, 3, VERLET_PARTICLE_COLOR);
+                filledCircleColor(renderer, scaledPosition2.x, scaledPosition2.y, 3, VERLET_PARTICLE_COLOR);
             }
         }
     }
-    // SDL_RenderPresent(renderer);
+    SDL_RenderPresent(renderer);
 }
