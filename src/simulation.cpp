@@ -129,6 +129,7 @@ namespace simulation
     {
         DestroySDL();
         delete this->world;
+        delete this->object_pool;
     }
 
     bool Simulation::HandleInput()
