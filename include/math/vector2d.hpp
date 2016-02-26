@@ -161,7 +161,9 @@ namespace math
     
     template<class T> T Angle(Vector2d<T>& left, Vector2d<T>& center, Vector2d<T>& right)
     {
-        return Angle((left-center), (right-center));
+        Vector2d<T> start = left - center;
+        Vector2d<T> end = right - center;
+        return Angle(start, end);
     }
     
     template<class T> bool EpsilonEquals(Vector2d<T>& v1, Vector2d<T>& v2, T epsilon)

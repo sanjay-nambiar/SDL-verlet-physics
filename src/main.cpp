@@ -1,9 +1,9 @@
 
-#include "simulation.hpp"
+#include "simulation/simulation.hpp"
 
 int main()
 {
-    Simulation sim;
+    simulation::Simulation sim;
 
     while(sim.HandleInput())
     {    	
