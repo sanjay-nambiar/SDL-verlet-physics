@@ -118,7 +118,7 @@ namespace simulation
 
     Simulation::Simulation()
     {
-        InitializeSDL();
+        // InitializeSDL();
         if (CreateWorld(WORLD_WIDTH, WORLD_HEIGHT))
         {
             exit(1);
@@ -127,7 +127,7 @@ namespace simulation
 
     Simulation::~Simulation()
     {
-        DestroySDL();
+        // DestroySDL();
         delete this->world;
         delete this->object_pool;
     }
@@ -163,8 +163,8 @@ namespace simulation
 
     void Simulation::Draw()
     {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
+        // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        // SDL_RenderClear(renderer);
 
         const DistanceConstraint<float>* distance_constraint = object_pool->distance_constraints;
         int constraint_count = object_pool->distance_constraints_count;
@@ -173,10 +173,10 @@ namespace simulation
             math::Vector2d<float> scaled_position1 = distance_constraint->particle1->position;
             math::Vector2d<float> scaled_position2 = distance_constraint->particle2->position;
 
-            lineColor(renderer, scaled_position1.x, scaled_position1.y, 
-                scaled_position2.x, scaled_position2.y, VERLET_LINE_COLOR);
-            filledCircleColor(renderer, scaled_position1.x, scaled_position1.y, 3, VERLET_PARTICLE_COLOR);
-            filledCircleColor(renderer, scaled_position2.x, scaled_position2.y, 3, VERLET_PARTICLE_COLOR);
+            // lineColor(renderer, scaled_position1.x, scaled_position1.y, 
+            //     scaled_position2.x, scaled_position2.y, VERLET_LINE_COLOR);
+            // filledCircleColor(renderer, scaled_position1.x, scaled_position1.y, 3, VERLET_PARTICLE_COLOR);
+            // filledCircleColor(renderer, scaled_position2.x, scaled_position2.y, 3, VERLET_PARTICLE_COLOR);
         }
 
         const PinConstraint<float>* pin_constraint = object_pool->pin_constraints;
@@ -184,8 +184,8 @@ namespace simulation
         for (int c = 0; c < constraint_count; ++c, ++pin_constraint)
         {
             math::Vector2d<float> scaled_position = pin_constraint->particle->position;
-            filledCircleColor(renderer, scaled_position.x, scaled_position.y, 5, VERLET_PIN_COLOR);
+            // filledCircleColor(renderer, scaled_position.x, scaled_position.y, 5, VERLET_PIN_COLOR);
         }
-        SDL_RenderPresent(renderer);
+        // SDL_RenderPresent(renderer);
     }
 }
