@@ -14,7 +14,7 @@ OBJ_FILES = $(patsubst $(SRC_DIR)/%.$(SRC_EXT),$(OBJ_DIR)/%.o,$(SRC_FILES))
 MKDIR_P = mkdir
 
 ## Build setup
-CC_OPTS = -c -pipe -Wall -MMD -std=gnu++11 -O3
+CC_OPTS = -c -pipe -Wall -MMD -std=gnu++11
 CC_DEBUG_OPTS =
 LN_OPTS =
 CC = g++
@@ -28,8 +28,8 @@ LN_SDL = -L$(SDL_LD_PATH) -Wl,-rpath,$(SDL_LD_PATH) -lSDL2 -lSDL2_gfx -lSDL2_ima
 
 
 ## Add debug opts to compiler
-#debug: CC_DEBUG_OPTS = -g3
-#debug: make_dir $(EXEC)
+debug: CC_DEBUG_OPTS = -g3 -O0
+debug: make_dir $(EXEC)
 
 ## This is the default action
 all: make_dir $(EXEC)
