@@ -91,21 +91,29 @@ namespace simulation
             math::Vector2d<float>(160,0), math::Vector2d<float>(180,0),
             math::Vector2d<float>(200,0), math::Vector2d<float>(220,0),
             math::Vector2d<float>(240,0), math::Vector2d<float>(260,0),
-            math::Vector2d<float>(280,0), math::Vector2d<float>(300,0),
-            math::Vector2d<float>(320,0), math::Vector2d<float>(340,0),
-            math::Vector2d<float>(360,0), math::Vector2d<float>(380,0),
-            math::Vector2d<float>(400,0), math::Vector2d<float>(420,0),
-            math::Vector2d<float>(440,0), math::Vector2d<float>(460,0),
-            math::Vector2d<float>(480,0), math::Vector2d<float>(500,0)
+            math::Vector2d<float>(280,0), math::Vector2d<float>(300,0)
         };
-        std::vector<int> pin_particle_indexes = {0, static_cast<int>(segment_points.size()-1)};
-        math::Vector2d<float> position_offset(140, 30);
-        float stiffness = 0.2;
+        std::vector<int> segment_pin_particle_indexes = {0};//, static_cast<int>(segment_points.size()-1)};
+        math::Vector2d<float> segment_position_offset(350, 30);
+        float segment_stiffness = 0.2;
         
-        Composite<float>* segment = LineSegments<float>(segment_points, pin_particle_indexes, position_offset, 
-            stiffness, object_pool);
+        Composite<float>* segment = LineSegments<float>(segment_points, segment_pin_particle_indexes,
+            segment_position_offset, segment_stiffness, object_pool);
 
-        return (segment == nullptr);
+
+
+
+        std::vector<math::Vector2d<float> > box_points = {
+            math::Vector2d<float>(75,0), math::Vector2d<float>(150,75),
+            math::Vector2d<float>(75,150), math::Vector2d<float>(0,75)
+        };
+        std::vector<std::pair<int, int> > constraint_particle_indexes = {{0,1}, {1,2}, {2,3}, {0,3}, {0,2}, {1,3}};
+        math::Vector2d<float> box_position_offset(100, 200);
+        float box_stiffness = 1;
+        Composite<float>* box = Polygon<float>(box_points, constraint_particle_indexes, box_position_offset, 
+            box_stiffness, object_pool);
+
+        return (segment == nullptr && box == nullptr);
     }
 
     inline math::Vector2d<float> Simulation::ScaleFromWorldToRenderer(math::Vector2d<float> position) const

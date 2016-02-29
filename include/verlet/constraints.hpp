@@ -50,7 +50,6 @@ namespace verlet
             _particle = constraint.particle;
             _position = constraint.position;
         }
-        
     };
 
 
