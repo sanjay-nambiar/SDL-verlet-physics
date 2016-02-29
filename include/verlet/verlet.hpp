@@ -81,6 +81,14 @@ namespace verlet
                 // calculate velocity
                 math::Vector2d<T> velocity = (particle->position - particle->last_position) * friction;
 
+                // apply ground_friction
+                if (particle->position.y >= _height-1 && math::EuclideanLengthSquare<T>(velocity) > 0.000001)
+                {
+                    T m = math::EuclideanLength<T>(velocity);
+                    velocity /= m;
+                    velocity *= (m * ground_friction);
+                }
+
                 // save last good state
                 particle->last_position = particle->position;
 
