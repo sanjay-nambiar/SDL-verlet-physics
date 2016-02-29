@@ -72,8 +72,6 @@ namespace verlet
 
         void Update(T step)
         {
-            // TODO: Add ground friction and bounds checking
-
             Particle<T>* particle = _object_pool->particles;
             int particle_count = _object_pool->particle_count;
             for (int p = 0; p < particle_count; ++p, ++particle)
