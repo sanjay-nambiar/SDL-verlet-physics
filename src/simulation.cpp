@@ -73,16 +73,8 @@ namespace simulation
         SDL_Quit();
     }
 
-    bool Simulation::CreateWorld(int width, int height)
+    bool CreateLineSegments(ObjectPool<float>* object_pool)
     {
-        object_pool = new ObjectPool<float>(100, 50, 100, 50, 20);
-
-        world_width = width;
-        world_height = height;
-        world_aspect_ratio = width / height;
-        world = new Verlet<float>(width, height, object_pool);
-
-        // Line segments
         std::vector<math::Vector2d<float> > segment_points = {
             math::Vector2d<float>(0,0), math::Vector2d<float>(20,0),
             math::Vector2d<float>(40,0), math::Vector2d<float>(60,0),
@@ -100,9 +92,11 @@ namespace simulation
         Composite<float>* segment = LineSegments<float>(segment_points, segment_pin_particle_indexes,
             segment_position_offset, segment_stiffness, object_pool);
 
+        return (segment != nullptr);
+    }
 
-
-
+    bool CreateBoxes(ObjectPool<float>* object_pool)
+    {
         std::vector<math::Vector2d<float> > box_points = {
             math::Vector2d<float>(75,0), math::Vector2d<float>(150,75),
             math::Vector2d<float>(75,150), math::Vector2d<float>(0,75)
@@ -113,8 +107,21 @@ namespace simulation
         Composite<float>* box = Polygon<float>(box_points, constraint_particle_indexes, box_position_offset, 
             box_stiffness, object_pool);
 
-        return (segment == nullptr && box == nullptr);
+        return (box != nullptr);
     }
+
+    bool Simulation::CreateWorld(int width, int height)
+    {
+        object_pool = new ObjectPool<float>(100, 50, 100, 50, 20);
+
+        world_width = width;
+        world_height = height;
+        world_aspect_ratio = width / height;
+        world = new Verlet<float>(width, height, object_pool);
+
+        return CreateLineSegments(object_pool) && CreateBoxes(object_pool);
+    }
+
 
     inline math::Vector2d<float> Simulation::ScaleFromWorldToRenderer(math::Vector2d<float> position) const
     {
@@ -127,7 +134,7 @@ namespace simulation
     Simulation::Simulation()
     {
         InitializeSDL();
-        if (CreateWorld(WORLD_WIDTH, WORLD_HEIGHT))
+        if (!CreateWorld(WORLD_WIDTH, WORLD_HEIGHT))
         {
             exit(1);
         }
