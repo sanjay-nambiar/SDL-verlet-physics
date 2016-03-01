@@ -1,4 +1,6 @@
 
+#include "SDL2/SDL.h"
+
 #include "simulation/simulation.hpp"
 
 int main()

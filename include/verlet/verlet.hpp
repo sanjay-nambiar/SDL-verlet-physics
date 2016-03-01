@@ -29,12 +29,11 @@ namespace verlet
             T x = particle->position.x;
             T y = particle->position.y;
 
-            if (particle->position.y > height-1)
+            if (particle->position.y > _height-1)
             {
-                y = height-1;
+                y = _height-1;
             }
-
-            if (particle->position.y < 0)
+            else if (particle->position.y < 0)
             {
                 y = 0;
             }
@@ -43,8 +42,7 @@ namespace verlet
             {
                 x = 0;
             }
-            
-            if (particle->position.x > width-1)
+            else if (particle->position.x > _width-1)
             {
                 x = width-1;
             }
@@ -64,6 +62,8 @@ namespace verlet
             : _object_pool(nullptr), width(_width), height(_height), friction(_friction),
             ground_friction(_ground_friction), gravity(_gravity), object_pool(_object_pool)
         {
+            _width = width;
+            _height = height;
             _gravity.Set(0, 0.2);
             _friction = 1;
             _ground_friction = 0.8;
@@ -72,14 +72,20 @@ namespace verlet
 
         void Update(T step)
         {
-            // TODO: Add ground friction and bounds checking
-
             Particle<T>* particle = _object_pool->particles;
             int particle_count = _object_pool->particle_count;
             for (int p = 0; p < particle_count; ++p, ++particle)
             {
                 // calculate velocity
                 math::Vector2d<T> velocity = (particle->position - particle->last_position) * friction;
+
+                // apply ground_friction
+                if (particle->position.y >= _height-1 && math::EuclideanLengthSquare<T>(velocity) > 0.000001)
+                {
+                    T m = math::EuclideanLength<T>(velocity);
+                    velocity /= m;
+                    velocity *= (m * ground_friction);
+                }
 
                 // save last good state
                 particle->last_position = particle->position;
@@ -115,6 +121,13 @@ namespace verlet
                 {
                     pin_constraint->Relax(stepCoef);
                 }
+            }
+
+            // restrict to bounds
+            particle = _object_pool->particles;
+            for (int p = 0; p < particle_count; ++p, ++particle)
+            {
+                RestrictToBounds(particle);
             }
         }
     };
