@@ -98,10 +98,14 @@ namespace simulation
     bool CreateBoxes(ObjectPool<float>* object_pool)
     {
         std::vector<math::Vector2d<float> > box_points = {
-            math::Vector2d<float>(75,0), math::Vector2d<float>(150,75),
+            math::Vector2d<float>(40,0), math::Vector2d<float>(110,0),
+            math::Vector2d<float>(150,75),
             math::Vector2d<float>(75,150), math::Vector2d<float>(0,75)
         };
-        std::vector<std::pair<int, int> > constraint_particle_indexes = {{0,1}, {1,2}, {2,3}, {0,3}, {0,2}, {1,3}};
+        std::vector<std::pair<int, int> > constraint_particle_indexes = {
+            {0,1}, {1,2}, {2,3}, {3,4}, {0,4},
+            {0,2}, {0,3}, {1,3}, {1,4}, {2,4}
+        };
         math::Vector2d<float> box_position_offset(100, 200);
         float box_stiffness = 1;
         Composite<float>* box = Polygon<float>(box_points, constraint_particle_indexes, box_position_offset, 
