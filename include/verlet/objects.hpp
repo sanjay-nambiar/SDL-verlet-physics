@@ -3,6 +3,7 @@
 #define ____basic_objects__
 
 #include <iostream>
+#include <cmath>
 
 #include "math/vector2d.hpp"
 #include "verlet/particle.hpp"
@@ -120,7 +121,52 @@ namespace simulation {
         return nullptr;
     }
 
-    // TODO: Add Tire and Cloth
+    // TODO: Add Cloth
+    template<class T> Composite<T>* Tire(math::Vector2d<T>& origin, T radius, int segments,
+        T spoke_stiffness, T tread_stiffness, ObjectPool<T>* object_pool)
+    {
+        if (object_pool->CanAllocate(segments + 1, 0, segments * 3, 0, 1))
+        {
+            T stride = (2 * M_PI)/segments;
+            Composite<T>* composite = object_pool->AllocateComposites(1);
+            Particle<T>* particles = object_pool->AllocateParticles(segments + 1);
+            DistanceConstraint<T>* distance_constraints = object_pool->AllocateDistanceConstraints(segments * 3);
+
+            // particles
+            *composite = Composite<T>();
+            Particle<T>* particle = &particles[0];
+            for (int i=0; i < segments; ++i, ++particle)
+            {
+                T theta = i * stride;
+                math::Vector2d<T> position(origin.x + cos(theta)*radius, origin.y + sin(theta)*radius);
+                *particle = Particle<T>(position);
+                composite->AddParticle(particle);
+            }
+            *particle = Particle<T>(origin);
+            composite->AddParticle(particle);
+
+            // constraints
+            DistanceConstraint<T>* distance_constraint = &distance_constraints[0];
+            for (int i = 0; i < segments; ++i)
+            {
+                *distance_constraint = DistanceConstraint<T>(&particles[i], &particles[(i+1) % segments],
+                    tread_stiffness);
+                composite->AddConstraint(distance_constraint);
+                distance_constraint++;
+
+                *distance_constraint = DistanceConstraint<T>(&particles[i], particle, spoke_stiffness);
+                composite->AddConstraint(distance_constraint);
+                distance_constraint++;
+
+                *distance_constraint = DistanceConstraint<T>(&particles[i], &particles[(i+5) % segments],
+                    tread_stiffness);
+                composite->AddConstraint(distance_constraint);
+                distance_constraint++;
+            }
+            return composite;
+        }
+        return nullptr;
+    }
 }
 
 

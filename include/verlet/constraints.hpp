@@ -2,6 +2,8 @@
 #ifndef ____constraints__
 #define ____constraints__
 
+#include <cmath>
+
 #include "math/vector2d.hpp"
 #include "verlet/particle.hpp"
 

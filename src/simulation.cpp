@@ -114,16 +114,29 @@ namespace simulation
         return (box != nullptr);
     }
 
+    bool CreateTire(ObjectPool<float>* object_pool)
+    {
+        math::Vector2d<float> center(500, 200);
+        float tread_stiffness = 1, spoke_stiffness = 1, radius = 100;
+        int segments = 30;
+        Composite<float>* tire = Tire<float>(center, radius, segments, spoke_stiffness, tread_stiffness,
+            object_pool);
+
+        return (tire != nullptr);
+    }
+
     bool Simulation::CreateWorld(int width, int height)
     {
-        object_pool = new ObjectPool<float>(100, 50, 100, 50, 20);
+        object_pool = new ObjectPool<float>(500, 50, 500, 10, 50);
 
         world_width = width;
         world_height = height;
         world_aspect_ratio = width / height;
         world = new Verlet<float>(width, height, object_pool);
 
-        return CreateLineSegments(object_pool) && CreateBoxes(object_pool);
+        return CreateLineSegments(object_pool)
+            && CreateBoxes(object_pool)
+            && CreateTire(object_pool);
     }
 
 
