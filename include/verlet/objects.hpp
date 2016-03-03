@@ -2,7 +2,6 @@
 #ifndef ____basic_objects__
 #define ____basic_objects__
 
-#include <iostream>
 #include <cmath>
 
 #include "math/vector2d.hpp"
@@ -121,7 +120,6 @@ namespace simulation {
         return nullptr;
     }
 
-    // TODO: Add Cloth
     template<class T> Composite<T>* Tire(math::Vector2d<T>& origin, T radius, int segments,
         T spoke_stiffness, T tread_stiffness, ObjectPool<T>* object_pool)
     {
@@ -162,6 +160,73 @@ namespace simulation {
                     tread_stiffness);
                 composite->AddConstraint(distance_constraint);
                 distance_constraint++;
+            }
+            return composite;
+        }
+        return nullptr;
+    }
+
+    template<class T> Composite<T>* Cloth(math::Vector2d<T> top_left, int width, int height, int segments,
+        int pin_mod, T stiffness, ObjectPool<T>* object_pool)
+    {
+        int particle_count = segments * segments;
+        int distance_constraints_count = 2 * segments * (segments - 1);
+        int pin_constraints_count = (segments / pin_mod) + 1;
+
+        if (object_pool->CanAllocate(particle_count, pin_constraints_count, distance_constraints_count, 0, 1))
+        {
+            Composite<T>* composite = object_pool->AllocateComposites(1);
+            Particle<T>* particles = object_pool->AllocateParticles(particle_count);
+            PinConstraint<T>* pin_constraints =  object_pool->AllocatePinConstraints(pin_constraints_count);
+            DistanceConstraint<T>* distance_constraints =
+                object_pool->AllocateDistanceConstraints(distance_constraints_count);
+
+            T x_stride = width / segments;
+            T y_stride = height / segments;
+
+            *composite = Composite<T>();
+            Particle<T>* particle = &particles[0];
+            DistanceConstraint<T>* distance_constraint = &distance_constraints[0];
+            PinConstraint<T>* pin_constraint = &pin_constraints[0];
+            for (int y = 0; y < segments; ++y)
+            {
+                for (int x = 0; x < segments; ++x)
+                {
+                    T px = top_left.x + (x * x_stride);
+                    T py = top_left.y + (y * y_stride);
+                    math::Vector2d<T> position(px, py);
+
+                    *particle = Particle<T>(position);
+                    composite->AddParticle(particle);
+                    // Add pin if required
+                    if (y == 0 && ((x%pin_mod) == 0 || x == segments-1))
+                    {
+                        *pin_constraint = PinConstraint<T>(particle, particle->position);
+                        composite->AddConstraint(pin_constraint);
+                        pin_constraint++;
+                    }
+                    particle++;
+
+                    if (x > 0)
+                    {
+                        int index = (y * segments) + x;
+                        // (y*segments + x) and (y*segments + x-1)
+                        *distance_constraint = DistanceConstraint<T>(&particles[index], &particles[index - 1],
+                            stiffness);
+                        composite->AddConstraint(distance_constraint);
+                        distance_constraint++;
+                    }
+
+                    if (y > 0)
+                    {
+                        int index = (y * segments) + x;
+                        // (y*segments + x) and ((y-1)*segments + x)
+                        *distance_constraint = DistanceConstraint<T>(&particles[index], &particles[index - segments],
+                            stiffness);
+                        composite->AddConstraint(distance_constraint);
+                        distance_constraint++;
+                    }
+                }
             }
             return composite;
         }

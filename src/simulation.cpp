@@ -13,15 +13,20 @@
 #include "verlet/objects.hpp"
 #include "verlet/verlet.hpp"
 
+#define WORLD_WIDTH 1000
+#define WORLD_HEIGHT 700
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 700
+
+#define MAX_PARTICLES 5000
+#define MAX_PIN_CONSTRAINTS 100
+#define MAX_DISTANCE_CONSTRAINTS 5000
+#define MAX_ANGULAR_CONSTRAINTS 0
+#define MAX_COMPOSITES 50
 
 #define VERLET_PARTICLE_COLOR 0xFF00FF00
 #define VERLET_PIN_COLOR 0xFF0000FF
 #define VERLET_LINE_COLOR 0xFFFFFFFF
-#define WORLD_WIDTH 800
-#define WORLD_HEIGHT 600
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
 
 namespace simulation
 {
@@ -73,7 +78,7 @@ namespace simulation
         SDL_Quit();
     }
 
-    bool CreateLineSegments(ObjectPool<float>* object_pool)
+    inline bool Simulation::CreateLineSegments()
     {
         std::vector<math::Vector2d<float> > segment_points = {
             math::Vector2d<float>(0,0), math::Vector2d<float>(20,0),
@@ -85,8 +90,8 @@ namespace simulation
             math::Vector2d<float>(240,0), math::Vector2d<float>(260,0),
             math::Vector2d<float>(280,0), math::Vector2d<float>(300,0)
         };
-        std::vector<int> segment_pin_particle_indexes = {0};//, static_cast<int>(segment_points.size()-1)};
-        math::Vector2d<float> segment_position_offset(350, 30);
+        std::vector<int> segment_pin_particle_indexes = {0};
+        math::Vector2d<float> segment_position_offset(400, 30);
         float segment_stiffness = 0.2;
         
         Composite<float>* segment = LineSegments<float>(segment_points, segment_pin_particle_indexes,
@@ -95,7 +100,7 @@ namespace simulation
         return (segment != nullptr);
     }
 
-    bool CreateBoxes(ObjectPool<float>* object_pool)
+    inline bool Simulation::CreateBoxes()
     {
         std::vector<math::Vector2d<float> > box_points = {
             math::Vector2d<float>(40,0), math::Vector2d<float>(110,0),
@@ -114,7 +119,7 @@ namespace simulation
         return (box != nullptr);
     }
 
-    bool CreateTire(ObjectPool<float>* object_pool)
+    inline bool Simulation::CreateTire()
     {
         math::Vector2d<float> center(500, 200);
         float tread_stiffness = 1, spoke_stiffness = 1, radius = 100;
@@ -125,18 +130,34 @@ namespace simulation
         return (tire != nullptr);
     }
 
+    inline bool Simulation::CreateCloth()
+    {
+        float width = 300, height = 350;
+        int segments = 20;
+        int pin_mod = 5;
+        float stiffness = 0.9;
+        math::Vector2d<float> top_left(700, 50);
+
+        Composite<float>* cloth = Cloth<float>(top_left, width, height, segments, pin_mod, stiffness,
+            object_pool);
+
+        return (cloth != nullptr);
+    }
+
     bool Simulation::CreateWorld(int width, int height)
     {
-        object_pool = new ObjectPool<float>(500, 50, 500, 10, 50);
+        object_pool = new ObjectPool<float>(MAX_PARTICLES, MAX_PIN_CONSTRAINTS, MAX_DISTANCE_CONSTRAINTS,
+            MAX_ANGULAR_CONSTRAINTS, MAX_COMPOSITES);
 
         world_width = width;
         world_height = height;
         world_aspect_ratio = width / height;
         world = new Verlet<float>(width, height, object_pool);
 
-        return CreateLineSegments(object_pool)
-            && CreateBoxes(object_pool)
-            && CreateTire(object_pool);
+        return CreateLineSegments()
+            && CreateBoxes()
+            && CreateTire()
+            && CreateCloth();
     }
 
 
@@ -197,6 +218,14 @@ namespace simulation
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
+        const Particle<float>* particle = object_pool->particles;
+        int particle_count = object_pool->particle_count;
+        for (int p = 0; p < particle_count; ++p, ++particle)
+        {
+            math::Vector2d<float> scaled_position = particle->position;
+            filledCircleColor(renderer, scaled_position.x, scaled_position.y, 3, VERLET_PARTICLE_COLOR);
+        }
+
         const DistanceConstraint<float>* distance_constraint = object_pool->distance_constraints;
         int constraint_count = object_pool->distance_constraints_count;
         for (int c = 0; c < constraint_count; ++c, ++distance_constraint)
@@ -206,8 +235,6 @@ namespace simulation
 
             lineColor(renderer, scaled_position1.x, scaled_position1.y, 
                 scaled_position2.x, scaled_position2.y, VERLET_LINE_COLOR);
-            filledCircleColor(renderer, scaled_position1.x, scaled_position1.y, 3, VERLET_PARTICLE_COLOR);
-            filledCircleColor(renderer, scaled_position2.x, scaled_position2.y, 3, VERLET_PARTICLE_COLOR);
         }
 
         const PinConstraint<float>* pin_constraint = object_pool->pin_constraints;

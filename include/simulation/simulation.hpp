@@ -26,6 +26,11 @@ namespace simulation
         void DestroySDL();
         bool CreateWorld(int width, int height);
 
+        inline bool CreateLineSegments();
+        inline bool CreateBoxes();
+        inline bool CreateTire();
+        inline bool CreateCloth();
+
         inline math::Vector2d<float> ScaleFromWorldToRenderer(math::Vector2d<float> position) const;
     public:
         Simulation();
