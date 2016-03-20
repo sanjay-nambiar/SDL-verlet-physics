@@ -64,7 +64,7 @@ namespace verlet
         {
             _width = width;
             _height = height;
-            _gravity.Set(0, 0.2);
+            _gravity.Set(-0.2, 0.2);
             _friction = 1;
             _ground_friction = 0.8;
             _object_pool = object_pool;
